@@ -2,12 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  cronString: {
-    type: String,
+  cronIds: {
+    type: Array,
     required: false
   },
   email: {
