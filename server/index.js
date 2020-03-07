@@ -9,6 +9,7 @@ const app = express();
 const users = require("./api/users");
 const Manager = require("./api/TaskManager");
 const keys = require("./config/keys");
+require("./config/passport")(passport); // Passport config
 
 // export universal manager
 const TaskManager = new Manager();
@@ -19,7 +20,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect(keys.MONGO_KEY, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+const opts = { useNewUrlParser: true, useUnifiedTopology: true };
+mongoose.connect(keys.MONGO_KEY, opts).then(() => {
   console.log("Connected to database");
 }).catch((err) => {
   console.log(err);
@@ -27,8 +29,7 @@ mongoose.connect(keys.MONGO_KEY, { useNewUrlParser: true, useUnifiedTopology: tr
 
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
-require("./config/passport")(passport);
+
 // Routes
 app.use("/api/users", users);
 
