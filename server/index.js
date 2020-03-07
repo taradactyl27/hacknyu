@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect(keys.MONGO_KEY, { useNewUrlParser: true }).then(() => {
+mongoose.connect(keys.MONGO_KEY, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
   console.log("Connected to database");
 }).catch((err) => {
   console.log(err);
