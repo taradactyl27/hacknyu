@@ -1,11 +1,18 @@
+// module imports
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const keys = require("./config/keys");
 const passport = require("passport");
-
-const users = require("./api/users");
 const app = express();
+
+// file imports
+const users = require("./api/users");
+const Manager = require("./api/TaskManager");
+const keys = require("./config/keys");
+
+// export universal manager
+const TaskManager = new Manager();
+module.exports = TaskManager;
 
 // Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
