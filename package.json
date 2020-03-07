@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/taradactyl27/hacknyu#readme",
   "dependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "nvm": "0.0.4"
   }
 }
