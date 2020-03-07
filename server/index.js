@@ -11,9 +11,9 @@ app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose.connect(keys.MONGO_KEY, { useNewUrlParser: true }).then(() => {
-  console.log("MongoDB successfully connected"))
+  console.log("Connected to database"));
 }).catch((err) => {
-  console.log(err)
+  console.log(err);
 });
 
 // run the server
