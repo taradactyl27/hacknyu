@@ -27,7 +27,7 @@ app.use("/api/users", users);
 
 app.post('/dataSubmittedHW', function(req,res){
   let data = req.body.data;
-  MyModel.find({ name: 'data' });
+  MyModel.find({username: oldUsername}, function (err, user) {
   /*const vision = require('@google-cloud/vision');
   const client = new vision.ImageAnnotatorClient();
   
@@ -38,10 +38,16 @@ app.post('/dataSubmittedHW', function(req,res){
   const detections = result.textAnnotations;
   console.log('Text:');
   detections.forEach(text => console.log(text));*/
-  
+  MyModel.save(function (err) {
+    if(err) {
+        console.error('ERROR!');
+    }
+});
+});
 })
 app.post('/dataSubmittedNotes', function(req,res){
   let data = req.body.data;
+  MyModel.find({username: oldUsername}, function (err, user) {
   /*const vision = require('@google-cloud/vision');
 
   const client = new vision.ImageAnnotatorClient();
@@ -68,6 +74,12 @@ app.post('/dataSubmittedNotes', function(req,res){
       });
     });
   });*/
+  MyModel.save(function (err) {
+    if(err) {
+        console.error('ERROR!');
+    }
+});
+});
 })
 
 app.post('/dataSubmittedNotes', function(req,res){
