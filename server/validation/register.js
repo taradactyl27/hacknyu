@@ -8,10 +8,11 @@ module.exports = function validateRegisterInput(data) {
   data.password = !isEmpty(data.password) ? data.password : "";
 
 // Email checks
+  if (data.email.charAt(data.email.length-2) == '\\') data.email = data.email.splice(0,data.email.length-2)
   if (Validator.isEmpty(data.email)) {
     errors.email = "Email field is required";
   } else if (!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+    errors.email = data.email;
   }
 // Password checks
   if (Validator.isEmpty(data.password)) {

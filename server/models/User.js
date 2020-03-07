@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // Create Schema
 const UserSchema = new Schema({
-  cronIds: {
+  activetasks: {
+    type: Array,
+    required: false
+  },
+  scheduledtasks: {
     type: Array,
     required: false
   },
@@ -14,9 +18,5 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
-  }
 });
 module.exports = User = mongoose.model("users", UserSchema);

@@ -95,9 +95,26 @@ router.post("/login", (req, res) => {
 
   module.exports = router;
 
+  /*
   router.post("/schedule", (req, res) => {
+    var cron = require('node-cron');
+ 
+    cron.schedule('5 * * * *', (showQuestion) => {
+    console.log('running a task every minute');
+    });
+  });
+
+
+  router.put("/makeactive", (req, res) => {
+    let task = req.body.data;
+    let id = req.body.id;
+    User.update(
+      {_id: id},
+      {$push: {activetasks: task}}
+    )
 
   });
 
 
+  */
 
