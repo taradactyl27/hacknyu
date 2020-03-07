@@ -25,9 +25,9 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 
-app.post('/dataSubmittedHW', function(req,res){
+app.post('/dataSubmittedHW', function(req, res){
   let data = req.body.data;
-  MyModel.find({username: oldUsername}, function (err, user) {
+  User.find({username: Username}, function (err, user) {
   /*const vision = require('@google-cloud/vision');
   const client = new vision.ImageAnnotatorClient();
   
@@ -38,7 +38,7 @@ app.post('/dataSubmittedHW', function(req,res){
   const detections = result.textAnnotations;
   console.log('Text:');
   detections.forEach(text => console.log(text));*/
-  MyModel.save(function (err) {
+  user.save(function (err) {
     if(err) {
         console.error('ERROR!');
     }
@@ -47,7 +47,7 @@ app.post('/dataSubmittedHW', function(req,res){
 })
 app.post('/dataSubmittedNotes', function(req,res){
   let data = req.body.data;
-  MyModel.find({username: oldUsername}, function (err, user) {
+  User.find({username: Username}, function (err, user) {
   /*const vision = require('@google-cloud/vision');
 
   const client = new vision.ImageAnnotatorClient();
@@ -74,7 +74,7 @@ app.post('/dataSubmittedNotes', function(req,res){
       });
     });
   });*/
-  MyModel.save(function (err) {
+  user.save(function (err) {
     if(err) {
         console.error('ERROR!');
     }
@@ -82,9 +82,13 @@ app.post('/dataSubmittedNotes', function(req,res){
 });
 })
 
-app.post('/dataSubmittedNotes', function(req,res){
+app.put('/profileupdate', function(req,res){
   let data = req.body.data;
-
+  User.update({username: oldUsername}, {
+    data: newUser.data
+}, function(err, numberAffected, rawResponse) {
+   //handle it
+})
 })
 // run the server
 const port = process.env.PORT || 5000; // process.env.port is Heroku's port if we deploy
