@@ -1,0 +1,22 @@
+{
+  "name": "hacknyu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taradactyl27/hacknyu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taradactyl27/hacknyu/issues"
+  },
+  "homepage": "https://github.com/taradactyl27/hacknyu#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
