@@ -8,7 +8,7 @@ const keys = require("../config/keys");
   router.post("/createtask", (req,res) =>{
   let task = req.body.data;
   let id = req.body.id;
-  User.post(
+  User.create(
     {_id: id},
     {$push: {scheduledtasks: task}}
   )

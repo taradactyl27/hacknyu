@@ -92,6 +92,8 @@ router.post("/login", (req, res) => {
     });
   });
 
+
+  /*
   router.post("/createtask", (req,res) =>{
     let task = req.body.data;
     let id = req.body.id;
@@ -101,7 +103,7 @@ router.post("/login", (req, res) => {
     )
     });
 
-
+    */
   module.exports = router;
 
   /*

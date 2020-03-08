@@ -32,6 +32,7 @@ app.use(passport.initialize());
 
 // Routes
 app.use("/api/users", users);
+app.use("/api/taskmanager", Manager)
 
 app.post('/dataSubmittedHW', function(req, res){
   let data = req.body.data;
