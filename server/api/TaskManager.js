@@ -17,7 +17,7 @@ const keys = require("../config/keys");
 router.delete("/deletetask", (req,res) =>{
   let id = req.body.id;
   User.remove(
-    {_id: id},
+    {_id: id}
   )
   });
 
