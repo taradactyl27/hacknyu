@@ -16,7 +16,7 @@ addJob = (user, job) => {
   // return id attached to job
   return id;
 }
-  router.post("createtask", (req,res) =>{
+  router.post("/createtask", (req,res) =>{
   let task = req.body.data;
   let id = req.body.id;
   User.post(
@@ -36,7 +36,7 @@ removeJob = (id) => {
   }
 }
 
-router.delete("deletetask", (req,res) =>{
+router.delete("/deletetask", (req,res) =>{
   let id = req.body.id;
   User.remove(
     {_id: id},
@@ -63,6 +63,15 @@ router.put("/makeactive", (req, res) => {
   User.update(
     {_id: id},
     {$push: {activetasks: task}}
+  )
+});
+
+router.put("/makescheduled", (req, res) => {
+  let task = req.body.data;
+  let id = req.body.id;
+  User.update(
+    {_id: id},
+    {$push: {scheduledtasks: task}}
   )
 });
 
