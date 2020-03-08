@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 
-  router.post("create", (req,res) =>{
+  router.post("/createtask", (req,res) =>{
   let task = req.body.data;
   let id = req.body.id;
   User.post(
@@ -14,11 +14,12 @@ const keys = require("../config/keys");
   )
   });
 
-
-router.delete("/deletetask", (req, res) => {
-  res.send
-});
-
+router.delete("/deletetask", (req,res) =>{
+  let id = req.body.id;
+  User.remove(
+    {_id: id},
+  )
+  });
 
 
 
@@ -31,6 +32,16 @@ router.put("/makeactive", (req, res) => {
   )
 });
 
+router.put("/makescheduled", (req, res) => {
+  let task = req.body.data;
+  let id = req.body.id;
+  User.update(
+    {_id: id},
+    {$push: {scheduledtasks: task}}
+  )
+});
 
 
-module.exports = Router;
+
+
+//module.exports = TaskManager;
