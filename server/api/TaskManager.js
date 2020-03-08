@@ -28,6 +28,11 @@ removeJob = (id) => {
   }
 }
 
+router.delete("/deletetask", (req, res) => {
+  res.send
+});
+
+
 // update the job
 // return true if success
 updateJob = (id, job) => {
