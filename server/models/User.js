@@ -12,11 +12,16 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: false
   },
   password: {
     type: String,
-    required: true
+    required: false
   },
 });
 module.exports = User = mongoose.model("users", UserSchema);
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
