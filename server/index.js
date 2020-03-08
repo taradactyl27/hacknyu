@@ -12,8 +12,8 @@ const keys = require("./config/keys");
 require("./config/passport")(passport); // Passport config
 
 // export universal manager
-const TaskManager = new Manager();
-module.exports = TaskManager;
+//const TaskManager = new Manager();
+//module.exports = TaskManager;
 
 // Bodyparser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
