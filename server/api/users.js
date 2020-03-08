@@ -92,7 +92,7 @@ router.post("/login", (req, res) => {
     });
   });
 
-  app.get('/data', function(req, res) {
+  router.get('/data', function(req, res) {
     var str = req.get('Authorization');
     try {
       jwt.verify(str, KEY, {algorithm: 'HS256'});
