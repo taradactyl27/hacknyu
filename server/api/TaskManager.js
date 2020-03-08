@@ -16,6 +16,14 @@ addJob = (user, job) => {
   // return id attached to job
   return id;
 }
+  router.post("create", (req,res) =>{
+  let task = req.body.data;
+  let id = req.body.id;
+  User.post(
+    {_id: id},
+    {$push: {scheduledtasks: task}}
+  )
+  });
 
 // remove job
 // return true if successful
