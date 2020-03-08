@@ -92,6 +92,15 @@ router.post("/login", (req, res) => {
     });
   });
 
+  router.post("/createtask", (req,res) =>{
+    let task = req.body.data;
+    let id = req.body.id;
+    User.create(
+      {_id: id},
+      {$push: {scheduledtasks: task}}
+    )
+    });
+
 
   module.exports = router;
 
