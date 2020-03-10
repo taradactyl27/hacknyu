@@ -4,69 +4,120 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
-var cron = require('node-cron');
 
-
-function createTask(id,task){
-  User.findOneAndUpdate({"_id": id}, 
+async function createTask(id,task) {
+  let returnVal = false;
+  var myPromise = () => {
+    return new Promise((resolve,reject) =>{
+    User.findOneAndUpdate({"_id": id}, 
     {$push: {"scheduledtasks": task}}, 
     {new: true, safe: true, upsert:true}).then((result) => {
-      return true;
-  }).catch((error) => {
-      return false;
+      return resolve(true);
+    }).catch((error) => {
+        return reject(false);
+      });
     });
+  };
+  var callPromise = async () => {
+    var result = await (myPromise());
+    return result;
+  };
+  callPromise().then(result => {
+    returnVal = result;
+  });
+  return returnVal;
 };
 
-function makeactive(id,task){
-  User.findOneAndUpdate({"_id": id}, 
-    {$pull: {"scheduledtasks": task}}, 
-    {new: true, safe: true, upsert:true}).then((result) => {
-  }).catch((error) => {
-      return false;
+async function makeactive(id,task){
+  let returnVal = false;
+  var myPromise = () => {
+    return new Promise((resolve,reject) =>{
+      User.findOneAndUpdate({"_id": id}, 
+      {$pull: {"scheduledtasks": task}}, 
+      {new: true, safe: true, upsert:true}).then((result) => {
+    }).catch((error) => {
+        reject(false);
     });
-  User.findOneAndUpdate({"_id": id}, 
-    {$push: {"activetasks": task}}, 
-    {new: true, safe: true, upsert:true}).then((result) => {
-      return true;
-  }).catch((error) => {
-      return false;
+  
+    User.findOneAndUpdate({"_id": id}, 
+      {$push: {"activetasks": task}}, 
+      {new: true, safe: true, upsert:true}).then((result) => {
+        resolve(true);
+    }).catch((error) => {
+        reject(false);
+      });
     });
-}
-
-function makescheduled(id,task){
-  User.findOneAndUpdate({"_id": id}, 
-  {$pull: {"activetasks": task}}, 
-  {new: true, safe: true, upsert:true}).then((result) => {
-}).catch((error) => {
-    return false;
+  };
+  var callPromise = async () => {
+    var result = await (myPromise());
+    return result;
+  };
+  callPromise().then(result => {
+    returnVal = result;
   });
-User.findOneAndUpdate({"_id": id}, 
-  {$push: {"scheduledtasks": task}}, 
-  {new: true, safe: true, upsert:true}).then((result) => {
-    return true;
-}).catch((error) => {
-    return false;
-  });
-}
+  return returnVal;
+};
 
-function deletetask(id,task){
-  User.findOneAndUpdate({"_id": id}, 
-    {$pull: {"scheduledtasks": task}}, 
-    {new: true, safe: true, upsert:true}).then((result) => {
-      return true;
-  }).catch((error) => {
-      return false;
+async function makescheduled(id,task){
+  let returnVal = false;
+  var myPromise = () => {
+    return new Promise((resolve,reject) =>{
+      User.findOneAndUpdate({"_id": id}, 
+      {$pull: {"activetasks": task}}, 
+      {new: true, safe: true, upsert:true}).then((result) => {
+    }).catch((error) => {
+        reject(false);
     });
-}
-router.post("/createtask", (req,res) =>{
+  
+    User.findOneAndUpdate({"_id": id}, 
+      {$push: {"scheduledtasks": task}}, 
+      {new: true, safe: true, upsert:true}).then((result) => {
+        resolve(true);
+    }).catch((error) => {
+        reject(false);
+      });
+    });
+  };
+  var callPromise = async () => {
+    var result = await (myPromise());
+    return result;
+  };
+  callPromise().then(result => {
+    returnVal = result;
+  });
+  return returnVal;
+};
+
+async function deletetask(id,task){
+  console.log(id,task);
+  let returnVal = false;
+  var myPromise = () => {
+    return new Promise((resolve,reject) =>{
+      User.findOneAndUpdate({"_id": id}, 
+        {$pull: {"scheduledtasks": task}}, 
+        {new: true, safe: true, upsert:true}).then((result) => {
+          console.log("deleted just fine"); 
+          resolve(true);
+      }).catch((error) => {
+        console.log(error);
+        reject(false);
+      });
+    });
+  };
+  var callPromise = async () => {
+    var result = await (myPromise());
+    return result;
+  };
+  callPromise().then(result => {
+    returnVal = result;
+  });
+  return returnVal;
+};
+
+router.post("/createtask", async (req,res) =>{
   let task = req.body.data;
   let id = req.body.id;
-  cron.schedule('* 1 * * * *', () => {
-    console.log("setting task to active");
-    makeactive(id,task);
-    this.destroy();
-  })
-  if (createTask(id,task) === true){
+  if (createTask(id,task)){
     return res.status(200).json({createTask: "Created task successfully!"});
   }
   else{
@@ -77,8 +128,7 @@ router.post("/createtask", (req,res) =>{
 router.delete("/deletetask", (req,res) =>{
   let task = req.body.data;
   let id = req.body.id;
-  deletetask(id,task);
-  if (createTask(id,task)){
+  if (deletetask(id,task)){
     return res.status(200).json({createTask: "Deleted task successfully!"});
   }
   else{
@@ -89,8 +139,7 @@ router.delete("/deletetask", (req,res) =>{
 router.put("/makeactive", (req, res) => {
   let task = req.body.data;
   let id = req.body.id;
-  makeactive(id,task);
-  if (createTask(id,task)){
+  if (makeactive(id,task)){
     return res.status(200).json({createTask: "Task made active successfully!"});
   }
   else{
@@ -101,8 +150,7 @@ router.put("/makeactive", (req, res) => {
 router.put("/makescheduled", (req, res) => {
   let task = req.body.data;
   let id = req.body.id;
-  makescheduled(id,task)
-  if (createTask(id,task)){
+  if (makescheduled(id,task)){
     return res.status(200).json({createTask: "Task Scheduled successfully!"});
   }
   else{

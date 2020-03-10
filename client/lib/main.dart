@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/Review.dart';
 import './screens/Landing.dart';
 
 void main() => runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Landing(),
+      home: Review(),
     );
   }
 }
